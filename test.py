@@ -1,4 +1,4 @@
-from SerbainTagger import SrbTreeTagger
+from SerbianTagger import SrbTreeTagger
 
 wrpped = SrbTreeTagger()
 sentence = "Ovo je kratka rečenica za testiranje taggera."
