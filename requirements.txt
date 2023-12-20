@@ -1,0 +1,6 @@
+matplotlib
+wordcloud
+treetaggerwrapper
+python-dotenv
+pandas  # Optional, for data handling
+nltk    # Optional, for additional text processing
