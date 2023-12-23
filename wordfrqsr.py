@@ -1,5 +1,6 @@
 import os
-from wordcloud import WordCloud
+import csv
+import collections
 from SerbianTagger import SrbTreeTagger
 
 # Function to load stopwords from a file
@@ -8,7 +9,7 @@ def load_stopwords(file_path):
         stopwords = f.read().splitlines()
     return set(stopwords)  # Return a set of stopwords
 
-# Function to process files and generate word clouds
+# Function to process files and generate lemma frequency CSV
 def process_files():
     input_dir = 'input'  # Input directory
     output_dir = 'output'  # Output directory
@@ -27,12 +28,17 @@ def process_files():
                         all_text += text  # Add the text to all_text
             # Lemmatize the combined text
             lemmatized_text = tagger.lemmarizer(all_text)
-            # Generate a word cloud from the lemmatized text
-            wordcloud = WordCloud(stopwords=stopwords, collocations=False).generate(lemmatized_text.lower())
-            # Determine the path for the output image
-            image_path = os.path.join(output_dir, f'{os.path.basename(root)}.png')
-            # Save the word cloud as an image
-            wordcloud.to_file(image_path)
+            # Count the frequency of each lemma
+            lemma_freq = collections.Counter(lemmatized_text.lower().split())
+            # Sort the lemmas by frequency in descending order
+            sorted_lemmas = sorted(lemma_freq.items(), key=lambda x: x[1], reverse=True)
+            # Determine the path for the output CSV file
+            csv_path = os.path.join(output_dir, f'{os.path.basename(root)}.csv')
+            # Write the sorted lemmas and their frequencies to a CSV file
+            with open(csv_path, 'w', newline='', encoding='utf-8') as f:
+                writer = csv.writer(f)
+                writer.writerow(['Lemma', 'Frequency'])
+                writer.writerows(sorted_lemmas)
 
 # Run the process_files function when the script is run directly
 if __name__ == "__main__":

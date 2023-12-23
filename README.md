@@ -6,7 +6,7 @@ WordcloudSR is a Python tool designed to transform Serbian texts into visually a
 ## Features
 - Text processing and lemmatization for Serbian language.
 - Generation of word clouds from processed text.
-- Customizable word cloud appearance.
+
 
 ## Prerequisites
 Before you begin, ensure you have met the following requirements:
@@ -16,7 +16,7 @@ Before you begin, ensure you have met the following requirements:
 ## Installation
 ### Clone the Repository
 ```bash
-git clone https://github.com/yourusername/WordcloudSR.git
+git clone https://github.com/sasa5linkar/WordcloudSR
 cd WordcloudSR
 '''
 ### Set Up a Virtual Environment (Optional but Recommended)
@@ -58,6 +58,17 @@ python wordcloudsr.py
 ```
 The images will be saved in the `output` folder. Thay will have same name as subfolders in `input` folder. Text files in input folder will be procesesed and images will be saved under name `wordcloud` in `output` folder.
 
+To use `wordfrqsr.py` for generating lemma frequency CSV files, follow these steps:
+
+1. Place the text files that you want to process in the `input` folder. The files should be in .txt format and encoded in UTF-8.
+
+2. Run the following command:
+
+```bash
+python wordfrqsr.py
+```
+
+The CSV files will be saved in the `output` folder. They will have the same name as the subfolders in the `input` folder.
 
 ## Contributing to WordcloudSR
 To contribute to WordcloudSR, follow these steps:
@@ -73,7 +84,7 @@ Alternatively, see the GitHub documentation on [creating a pull request](https:/
 ## Contributors
 Thanks to the following people who have contributed to this project:
 
-- [@yourusername](https://github.com/yourusername)
+- [@sasa5linkar](https://github.com/sasa5linkar)
 
 ## Contact
 If you want to contact me, you can reach me at `sasa5linkar@gmail.com`.
