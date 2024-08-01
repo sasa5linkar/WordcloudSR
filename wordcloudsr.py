@@ -9,7 +9,7 @@ def load_stopwords(file_path):
     return set(stopwords)  # Return a set of stopwords
 
 # Function to process files and generate word clouds
-def process_files():
+def process_files(collocations=False):
     input_dir = 'input'  # Input directory
     output_dir = 'output'  # Output directory
     tagger = SrbTreeTagger()  # Initialize tagger
@@ -28,12 +28,15 @@ def process_files():
             # Lemmatize the combined text
             lemmatized_text = tagger.lemmarizer(all_text)
             # Generate a word cloud from the lemmatized text
-            wordcloud = WordCloud(stopwords=stopwords, collocations=False).generate(lemmatized_text.lower())
+            wordcloud = WordCloud(stopwords=stopwords, collocations=collocations).generate(lemmatized_text.lower())
             # Determine the path for the output image
-            image_path = os.path.join(output_dir, f'{os.path.basename(root)}.png')
+            if collocations:
+                image_path = os.path.join(output_dir, f'{os.path.basename(root)}_collocations.png')
+            else:   
+                image_path = os.path.join(output_dir, f'{os.path.basename(root)}.png')
             # Save the word cloud as an image
             wordcloud.to_file(image_path)
 
 # Run the process_files function when the script is run directly
 if __name__ == "__main__":
-    process_files()
+    process_files(True)

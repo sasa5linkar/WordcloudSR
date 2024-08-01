@@ -30,6 +30,10 @@ def process_files():
             lemmatized_text = tagger.lemmarizer(all_text)
             # Count the frequency of each lemma
             lemma_freq = collections.Counter(lemmatized_text.lower().split())
+            #removing stopwords
+            for stopword in stopwords:
+                if stopword in lemma_freq:
+                    del lemma_freq[stopword]
             # Sort the lemmas by frequency in descending order
             sorted_lemmas = sorted(lemma_freq.items(), key=lambda x: x[1], reverse=True)
             # Determine the path for the output CSV file
