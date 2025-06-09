@@ -118,7 +118,14 @@ def parse_arguments() -> Dict[str, Any]:
     
     parser.add_argument('--stopwords', default='stopwords.txt',
                         help='Stopwords file path (default: stopwords.txt)')
-    
+
+    parser.add_argument('--width', type=int, default=1200,
+                        help='Width of the generated word clouds (default: 1200)')
+    parser.add_argument('--height', type=int, default=800,
+                        help='Height of the generated word clouds (default: 800)')
+    parser.add_argument('--max-words', type=int, default=200,
+                        help='Maximum number of words in the word cloud (default: 200)')
+
     parser.add_argument('--debug', action='store_true',
                         help='Enable debug logging')
     

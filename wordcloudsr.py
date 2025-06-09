@@ -105,7 +105,8 @@ def save_wordcloud(wordcloud: WordCloud, output_path: str, dpi: int = 300) -> bo
 
 
 def process_directory(directory: str, tagger: SrbTreeTagger, stopwords: Set[str],
-                     output_dir: str, collocations: bool) -> Tuple[Optional[str], Optional[str]]:
+                     output_dir: str, collocations: bool,
+                     width: int, height: int, max_words: int) -> Tuple[Optional[str], Optional[str]]:
     """
     Process a single directory of text files to generate word clouds.
     
@@ -115,6 +116,9 @@ def process_directory(directory: str, tagger: SrbTreeTagger, stopwords: Set[str]
         stopwords (Set[str]): Set of stopwords.
         output_dir (str): Directory to save output images.
         collocations (bool): Whether to include collocations.
+        width (int): Width of the generated word cloud image.
+        height (int): Height of the generated word cloud image.
+        max_words (int): Maximum number of words in the word cloud.
         
     Returns:
         Tuple[Optional[str], Optional[str]]: Paths to the standard and collocations word cloud images
@@ -139,7 +143,14 @@ def process_directory(directory: str, tagger: SrbTreeTagger, stopwords: Set[str]
     results = []
     
     # Generate standard word cloud
-    wordcloud = generate_wordcloud(lemmatized_text, stopwords, collocations=False)
+    wordcloud = generate_wordcloud(
+        lemmatized_text,
+        stopwords,
+        collocations=False,
+        width=width,
+        height=height,
+        max_words=max_words
+    )
     if wordcloud:
         std_path = os.path.join(output_dir, f'{folder_name}.png')
         if save_wordcloud(wordcloud, std_path):
@@ -151,7 +162,14 @@ def process_directory(directory: str, tagger: SrbTreeTagger, stopwords: Set[str]
     
     # Generate collocations word cloud if requested
     if collocations:
-        wordcloud = generate_wordcloud(lemmatized_text, stopwords, collocations=True)
+        wordcloud = generate_wordcloud(
+            lemmatized_text,
+            stopwords,
+            collocations=True,
+            width=width,
+            height=height,
+            max_words=max_words
+        )
         if wordcloud:
             coll_path = os.path.join(output_dir, f'{folder_name}_collocations.png')
             if save_wordcloud(wordcloud, coll_path):
@@ -166,10 +184,13 @@ def process_directory(directory: str, tagger: SrbTreeTagger, stopwords: Set[str]
     return tuple(results)
 
 
-def process_files(collocations: bool = False, 
-                 input_dir: str = 'input', 
-                 output_dir: str = 'output', 
-                 stopwords_file: str = 'stopwords.txt') -> Dict[str, Dict[str, str]]:
+def process_files(collocations: bool = False,
+                 input_dir: str = 'input',
+                 output_dir: str = 'output',
+                 stopwords_file: str = 'stopwords.txt',
+                 width: int = 1200,
+                 height: int = 800,
+                 max_words: int = 200) -> Dict[str, Dict[str, str]]:
     """
     Process text files in subdirectories, generate word clouds, and save as images.
     
@@ -178,11 +199,17 @@ def process_files(collocations: bool = False,
         input_dir (str): Directory containing subdirectories with text files.
         output_dir (str): Directory where output images will be saved.
         stopwords_file (str): File containing stopwords to exclude.
+        width (int): Width of the generated word clouds.
+        height (int): Height of the generated word clouds.
+        max_words (int): Maximum number of words in each word cloud.
         
     Returns:
         Dict[str, Dict[str, str]]: Results dictionary with paths to generated images.
     """
-    logger.info(f"Starting word cloud generation (collocations={collocations})")
+    logger.info(
+        f"Starting word cloud generation (collocations={collocations}, "
+        f"width={width}, height={height}, max_words={max_words})"
+    )
     
     # Ensure output directory exists
     ensure_directory_exists(output_dir)
@@ -204,7 +231,14 @@ def process_files(collocations: bool = False,
             
             folder_name = os.path.basename(root)
             std_path, coll_path = process_directory(
-                root, tagger, stopwords, output_dir, collocations
+                root,
+                tagger,
+                stopwords,
+                output_dir,
+                collocations,
+                width,
+                height,
+                max_words
             )
             
             # Store results
@@ -232,6 +266,9 @@ def main():
     parser = argparse.ArgumentParser(description='WordCloudSR - Serbian Word Cloud Generator')
     parser.add_argument('--no-collocations', action='store_true',
                       help='Disable generation of collocations word clouds')
+    parser.add_argument('--width', type=int, default=1200)
+    parser.add_argument('--height', type=int, default=800)
+    parser.add_argument('--max-words', type=int, default=200)
     wordcloud_args = parser.parse_args()
     
     # Run the main process
@@ -239,7 +276,10 @@ def main():
         collocations=not wordcloud_args.no_collocations,
         input_dir=args['input'],
         output_dir=args['output'],
-        stopwords_file=args['stopwords']
+        stopwords_file=args['stopwords'],
+        width=args['width'],
+        height=args['height'],
+        max_words=args['max_words']
     )
 
 
