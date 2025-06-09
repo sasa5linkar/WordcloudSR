@@ -227,16 +227,10 @@ def main():
     """Parse arguments and run the word cloud generation process."""
     # Get command line arguments
     args = parse_arguments()
-    
-    # Add wordcloud-specific arguments
-    parser = argparse.ArgumentParser(description='WordCloudSR - Serbian Word Cloud Generator')
-    parser.add_argument('--no-collocations', action='store_true',
-                      help='Disable generation of collocations word clouds')
-    wordcloud_args = parser.parse_args()
-    
+
     # Run the main process
     process_files(
-        collocations=not wordcloud_args.no_collocations,
+        collocations=not args['no_collocations'],
         input_dir=args['input'],
         output_dir=args['output'],
         stopwords_file=args['stopwords']

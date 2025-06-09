@@ -121,6 +121,9 @@ def parse_arguments() -> Dict[str, Any]:
     
     parser.add_argument('--debug', action='store_true',
                         help='Enable debug logging')
+
+    parser.add_argument('--no-collocations', action='store_true',
+                        help='Disable generation of collocations word clouds')
     
     args = parser.parse_args()
     
