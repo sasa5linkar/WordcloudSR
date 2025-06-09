@@ -146,6 +146,18 @@ To customize the stopwords that should be excluded from analysis:
 2. Add or remove words as needed (one word per line)
 3. Save the file
 
+### GUI Application
+
+If you prefer a graphical interface you can run the Tkinter GUI:
+
+```bash
+python gui.py
+```
+
+The window lets you choose the input/output directories and a stopword file. You
+can also enable or disable collocations before starting the processing. Basic
+status messages are displayed in the bottom panel.
+
 ## Advanced Usage
 
 ### Command-Line Arguments
