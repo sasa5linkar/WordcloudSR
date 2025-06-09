@@ -119,6 +119,9 @@ def parse_arguments() -> Dict[str, Any]:
     parser.add_argument('--stopwords', default='stopwords.txt',
                         help='Stopwords file path (default: stopwords.txt)')
 
+    parser.add_argument('--no-collocations', action='store_true',
+                        help='Disable generation of collocations word clouds')
+
     parser.add_argument('--width', type=int, default=1200,
                         help='Width of the generated word clouds (default: 1200)')
     parser.add_argument('--height', type=int, default=800,
