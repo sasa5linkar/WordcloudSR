@@ -165,11 +165,8 @@ status messages are displayed in the bottom panel.
 Both scripts support optional command-line arguments for customization:
 
 ```bash
-# Custom input/output directories
-python wordcloudsr.py --input custom_input --output custom_output
-
-# Disable collocations
-python wordcloudsr.py --no-collocations
+# Custom input/output directories and disable collocations
+python wordcloudsr.py --input custom_input --output custom_output --no-collocations
 
 # Specify different stopwords file
 python wordfrqsr.py --stopwords custom_stopwords.txt
