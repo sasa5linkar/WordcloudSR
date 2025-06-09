@@ -162,11 +162,19 @@ status messages are displayed in the bottom panel.
 
 ### Command-Line Arguments
 
-Both scripts support optional command-line arguments for customization:
+Both scripts support optional command-line arguments for customization. In
+`wordcloudsr.py` you can also adjust the image dimensions and the maximum
+number of words in the cloud:
 
 ```bash
 # Custom input/output directories and disable collocations
 python wordcloudsr.py --input custom_input --output custom_output --no-collocations
+
+# Custom word cloud size
+python wordcloudsr.py --width 1600 --height 900
+
+# Limit number of words
+python wordcloudsr.py --max-words 100
 
 # Specify different stopwords file
 python wordfrqsr.py --stopwords custom_stopwords.txt
