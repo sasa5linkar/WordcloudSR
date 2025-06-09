@@ -32,7 +32,7 @@ def test_lemmatization():
         print("Input sentence:")
         print(f"  \"{sentence}\"")
         
-        lemmatized = tagger.lemmarizer(sentence)
+        lemmatized = tagger.lemmatize(sentence)
         
         print("\nLemmatized output:")
         print(f"  \"{lemmatized}\"")

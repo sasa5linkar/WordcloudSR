@@ -48,7 +48,7 @@ def calculate_lemma_frequencies(text: str, tagger: SrbTreeTagger, stopwords: Set
         return []
         
     # Lemmatize the text
-    lemmatized_text = tagger.lemmarizer(text)
+    lemmatized_text = tagger.lemmatize(text)
     
     if not lemmatized_text:
         logger.warning("Lemmatization produced empty result")
