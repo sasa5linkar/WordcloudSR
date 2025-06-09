@@ -81,10 +81,16 @@ class WordcloudGUI:
             self.append_status(f"Error: {e}\n")
 
     def append_status(self, text: str) -> None:
-        self.status.configure(state="normal")
-        self.status.insert(tk.END, text)
-        self.status.see(tk.END)
-        self.status.configure(state="disabled")
+        """Safely append status text from any thread."""
+
+        def _append() -> None:
+            self.status.configure(state="normal")
+            self.status.insert(tk.END, text)
+            self.status.see(tk.END)
+            self.status.configure(state="disabled")
+
+        # Schedule UI updates on the main thread
+        self.master.after(0, _append)
 
 
 def main() -> None:
