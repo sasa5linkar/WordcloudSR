@@ -15,6 +15,7 @@ Author: "Petalinkar Saša"
 import os
 import logging
 from typing import Optional
+import warnings
 import treetaggerwrapper as ttpw
 from dotenv import load_dotenv
 
@@ -58,7 +59,7 @@ class SrbTreeTagger:
             logger.error(f"Failed to initialize TreeTagger: {e}")
             raise ValueError(f"TreeTagger initialization failed: {e}")
 
-    def lemmarizer(self, text: str) -> Optional[str]:
+    def lemmatize(self, text: str) -> Optional[str]:
         """
         Replace all words in a string with their lemmas using TreeTagger.
 
@@ -70,7 +71,7 @@ class SrbTreeTagger:
             
         Examples:
             >>> tagger = SrbTreeTagger()
-            >>> tagger.lemmarizer("Ovo je kratka rečenica za testiranje.")
+            >>> tagger.lemmatize("Ovo je kratka rečenica za testiranje.")
             "ovaj jesam kratak rečenica za testiranje ."
         """
         if text is None:
@@ -96,3 +97,16 @@ class SrbTreeTagger:
         except Exception as e:
             logger.error(f"Unexpected error during lemmatization: {e}")
             return text  # Return original text on error
+
+    def lemmarizer(self, text: str) -> Optional[str]:
+        """Deprecated wrapper for :meth:`lemmatize`.
+
+        This method is maintained for backward compatibility and will be removed
+        in a future release. Use :func:`lemmatize` instead.
+        """
+        warnings.warn(
+            "lemmarizer is deprecated, use lemmatize instead",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return self.lemmatize(text)

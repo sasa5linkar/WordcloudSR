@@ -129,7 +129,7 @@ def process_directory(directory: str, tagger: SrbTreeTagger, stopwords: Set[str]
         return None, None
         
     # Lemmatize the combined text
-    lemmatized_text = tagger.lemmarizer(all_text)
+    lemmatized_text = tagger.lemmatize(all_text)
     
     if not lemmatized_text:
         logger.warning(f"Lemmatization failed for {directory}, skipping")
